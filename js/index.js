@@ -37,7 +37,8 @@ let lrcData = parseLrc();
 let doms = {
   audio: document.querySelector("audio"),
   ul: document.querySelector(".container ul"),
-  container: document.querySelector(".container")
+  container: document.querySelector(".container"),
+  button: document.querySelector(".button")
 };
 /**
  * 计算出在当前播放器播放到第几秒的情况下
@@ -94,6 +95,29 @@ function setOffset() {
   if (doms.ul.children[index]) doms.ul.children[index].classList.add("active");
 }
 
+let btnClick = true;
+doms.button.onclick = () => {
+  btnClick = !btnClick;
+  if (btnClick === true) doms.audio.pause();
+  else doms.audio.play();
+};
 doms.audio.addEventListener("timeupdate", () => {
   setOffset();
 });
+
+let animateButton = function(e) {
+  e.preventDefault;
+  //reset animation
+  e.target.classList.remove("animate");
+
+  e.target.classList.add("animate");
+  setTimeout(function() {
+    e.target.classList.remove("animate");
+  }, 700);
+};
+
+let bubblyButtons = document.getElementsByClassName("button");
+
+for (let i = 0; i < bubblyButtons.length; i++) {
+  bubblyButtons[i].addEventListener("click", animateButton, false);
+}
